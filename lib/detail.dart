@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/format_rupiah.dart';
+import 'package:myapp/keranjang.dart';
 import 'package:myapp/provider_keranjang.dart';
 import 'package:myapp/provider_produk.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,13 @@ class DetailPage extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => KeranjangPage(),
+                    ));
+              },
               icon: Badge(
                   label: Consumer<ProviderKeranjang>(
                     builder: (context, value, child) =>
@@ -129,8 +136,8 @@ class DetailPage extends StatelessWidget {
         onPressed: () {
           Provider.of<ProviderKeranjang>(context, listen: false)
               .simpanProduk(produk);
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Berhasil Masukan Produk ke Keranjang')));
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Berhasil Masukan Produk ke Keranjang')));
         },
         label: Text('Add'),
         icon: Icon(Icons.add),
