@@ -19,7 +19,7 @@ class DetailPage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => KeranjangPage(),
+                      builder: (context) => const KeranjangPage(),
                     ));
               },
               icon: Badge(
@@ -137,12 +137,12 @@ class DetailPage extends StatelessWidget {
           Provider.of<ProviderKeranjang>(context, listen: false)
               .simpanProduk(produk);
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Berhasil Masukan Produk ke Keranjang')));
+              const SnackBar(content: Text('Berhasil Masukan Produk ke Keranjang')));
         },
-        label: Text('Add'),
-        icon: Icon(Icons.add),
+        label: const Text('Add'),
+        icon: const Icon(Icons.add),
         style: ButtonStyle(
-            foregroundColor: WidgetStatePropertyAll(Colors.white),
+            foregroundColor: const WidgetStatePropertyAll(Colors.white),
             backgroundColor:
                 WidgetStatePropertyAll(Colors.pink.withOpacity(0.7))),
       ),

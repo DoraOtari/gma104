@@ -10,7 +10,7 @@ class KeranjangPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(child: Text('ini halaman keranjang')),
+      body: const Center(child: Text('ini halaman keranjang')),
     );
   }
 }
