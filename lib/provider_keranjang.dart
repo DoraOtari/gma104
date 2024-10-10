@@ -44,4 +44,20 @@ class ProviderKeranjang extends ChangeNotifier {
     _tambahKeranjang();
     notifyListeners();
   }
+
+  void _hapusKeranjang() async {
+    final pref = await SharedPreferences.getInstance();
+    List<String> dataKeranjang = _listKeranjang
+        .map(
+          (e) => jsonEncode(e.toJson()),
+        )
+        .toList();
+    pref.setStringList('listKeranjang', dataKeranjang);
+  }
+
+  void hapusProduk(int id) {
+    _listKeranjang.removeWhere((element) => element.id == id);
+    _hapusKeranjang();
+    notifyListeners();
+  }
 }
