@@ -29,22 +29,28 @@ class ListProduk extends StatelessWidget {
         itemBuilder: (context, index) {
           Produk produk = value.listKeranjang[index];
           return Dismissible(
-            onDismissed: (_) => showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Konfirmasi Perintah'),
-                content: const Text(
-                    'Apakah anda yakin ingin menghapus produk dari keranjang'),
-                actions: [
-                  TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text('Tidak')),
-                  TextButton(
-                      onPressed: () => Navigator.of(context).pop(true),
-                      child: const Text('Ya')),
-                ],
-              ),
-            ),
+            confirmDismiss: (_) async {
+              bool confirm = await showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Konfirmasi Perintah'),
+                  content: const Text(
+                      'Apakah anda yakin ingin menghapus produk dari keranjang'),
+                  actions: [
+                    TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: const Text('Tidak')),
+                    TextButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: const Text('Ya')),
+                  ],
+                ),
+              );
+              return confirm;
+            },
+            onDismissed: (_) =>
+                Provider.of<ProviderKeranjang>(context, listen: false)
+                    .hapusProduk(produk.id),
             direction: DismissDirection.endToStart,
             background: Container(
               color: Colors.pink,
