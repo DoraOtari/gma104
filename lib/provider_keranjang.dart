@@ -9,9 +9,19 @@ class ProviderKeranjang extends ChangeNotifier {
 
   List<Produk> get listKeranjang => _listKeranjang;
   int get jumlahKeranjang => _listKeranjang.length;
+  num get totalBayar => _hitungBelanja();
 
   ProviderKeranjang() {
     _ambilProduk();
+    _hitungBelanja();
+  }
+
+  num _hitungBelanja() {
+    num total = 0;
+    for (var produk in _listKeranjang) {
+      total += produk.harga;
+    }
+    return total;
   }
 
   void _ambilProduk() async {
