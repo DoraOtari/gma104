@@ -1,5 +1,5 @@
-zahra 10
-tarisa 10
+zahra 20
+tarisa 20
 Rizky 5
 fadhel 5
 akbar 5

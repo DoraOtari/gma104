@@ -91,14 +91,14 @@ class TotalBayar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 100,
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
         children: [
           const Text(
             'Total Bayar',
             style: TextStyle(fontSize: 20),
           ),
-          Divider(),
+          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -130,9 +130,71 @@ class TombolPesan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       height: 50,
-      child: ElevatedButton(onPressed: () {}, child: Text('Pesan Sekarang')),
+      child: ElevatedButton(
+          style: const ButtonStyle(
+              foregroundColor: WidgetStatePropertyAll(Colors.white),
+              backgroundColor: WidgetStatePropertyAll(Colors.pink)),
+          onPressed: () => showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) => const BagianFormAlamat(),
+              ),
+          child: const Text('Pesan Sekarang')),
+    );
+  }
+}
+
+class BagianFormAlamat extends StatelessWidget {
+  const BagianFormAlamat({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FractionallySizedBox(
+      heightFactor: 0.9,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            const SizedBox(
+                width: 100,
+                child: Divider(
+                  thickness: 5,
+                )),
+            const Text(
+              'Informasi Pemesanan',
+              style: TextStyle(fontSize: 24),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(label: Text('Nama Penerima')),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              maxLines: 3,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  label: Text('Alamat Pengiriman')),
+            ),
+            GestureDetector(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 40,
+                margin: EdgeInsets.only(top: 10),
+                decoration: BoxDecoration(color: Colors.pink),
+                child: const Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Simpan',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    )),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
