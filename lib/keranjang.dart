@@ -238,11 +238,18 @@ class BagianAlamat extends StatelessWidget {
             itemCount: listAlamat.length,
             itemBuilder: (context, index) {
               final Alamat alamat = listAlamat[index];
-              return Column(
-                children: [
-                  Text('Penerima: ${alamat.namaPenerima}'),
-                  Text('ALamat: ${alamat.alamatPengiriman}'),
-                ],
+              return Card(
+                color: Colors.pink.shade50,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Penerima: ${alamat.namaPenerima}'),
+                      Text('ALamat: ${alamat.alamatPengiriman}'),
+                    ],
+                  ),
+                ),
               );
             },
           ),
