@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:myapp/format_rupiah.dart';
+import 'package:myapp/provider_alamat.dart';
 import 'package:myapp/provider_keranjang.dart';
 import 'package:myapp/provider_produk.dart';
 import 'package:provider/provider.dart';
@@ -77,8 +79,9 @@ class ListProduk extends StatelessWidget {
             ),
           ),
         ),
+        const BagianAlamat(),
         const TotalBayar(),
-        const TombolPesan()
+        const TombolPesan(),
       ],
     );
   }
@@ -146,15 +149,23 @@ class TombolPesan extends StatelessWidget {
   }
 }
 
-class BagianFormAlamat extends StatelessWidget {
+class BagianFormAlamat extends StatefulWidget {
   const BagianFormAlamat({super.key});
+
+  @override
+  State<BagianFormAlamat> createState() => _BagianFormAlamatState();
+}
+
+class _BagianFormAlamatState extends State<BagianFormAlamat> {
+  final _alamatPengirimanCon = TextEditingController();
+  final _namaPenerimaCon = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       heightFactor: 0.9,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
             const SizedBox(
@@ -167,12 +178,14 @@ class BagianFormAlamat extends StatelessWidget {
               style: TextStyle(fontSize: 24),
             ),
             TextFormField(
+              controller: _namaPenerimaCon,
               decoration: const InputDecoration(label: Text('Nama Penerima')),
             ),
             const SizedBox(
               height: 20,
             ),
             TextFormField(
+              controller: _alamatPengirimanCon,
               maxLines: 3,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -182,19 +195,59 @@ class BagianFormAlamat extends StatelessWidget {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 40,
-                margin: EdgeInsets.only(top: 10),
-                decoration: BoxDecoration(color: Colors.pink),
-                child: const Align(
+                margin: const EdgeInsets.only(top: 10),
+                decoration: const BoxDecoration(color: Colors.pink),
+                child: Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'Simpan',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    child: GestureDetector(
+                      onTap: () {
+                        final Alamat alamat = Alamat.fromMap({
+                          'alamatPengiriman': _alamatPengirimanCon.text,
+                          'namaPenerima': _namaPenerimaCon.text,
+                        });
+                        Provider.of<AlamatProvider>(context, listen: false)
+                            .tambahAlamat(alamat);
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Simpan',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
                     )),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class BagianAlamat extends StatelessWidget {
+  const BagianAlamat({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AlamatProvider>(
+      builder: (context, value, child) {
+        final List<Alamat> listAlamat = value.listAlamat;
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 8),
+          height: 200,
+          child: ListView.builder(
+            itemCount: listAlamat.length,
+            itemBuilder: (context, index) {
+              final Alamat alamat = listAlamat[index];
+              return Column(
+                children: [
+                  Text('Penerima: ${alamat.namaPenerima}'),
+                  Text('ALamat: ${alamat.alamatPengiriman}'),
+                ],
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

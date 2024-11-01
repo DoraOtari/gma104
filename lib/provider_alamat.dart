@@ -35,7 +35,7 @@ class Alamat {
 
 class AlamatProvider extends ChangeNotifier {
   List<Alamat> _listAlamat = [];
-  get listAlamat => _listAlamat;
+  List<Alamat> get listAlamat => _listAlamat;
 
   // buat konstruktor yg akan otomatis dijalankan
   AlamatProvider() {
@@ -65,7 +65,7 @@ class AlamatProvider extends ChangeNotifier {
 // fungsi mengambil data dari tabel alamat
   Future<void> _ambilAlamat() async {
     final db = await _dbHelper();
-    final listMapAlamat = await db.query('alamat');
+    final listMapAlamat = await db.query('tb_alamat');
     final listAlamat = listMapAlamat
         .map(
           (e) => Alamat.fromMap(e),
