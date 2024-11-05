@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:myapp/format_rupiah.dart';
 import 'package:myapp/provider_alamat.dart';
 import 'package:myapp/provider_keranjang.dart';
@@ -150,7 +149,8 @@ class TombolPesan extends StatelessWidget {
 }
 
 class BagianFormAlamat extends StatefulWidget {
-  const BagianFormAlamat({super.key});
+  const BagianFormAlamat({super.key, this.alamat});
+  final Alamat? alamat;
 
   @override
   State<BagianFormAlamat> createState() => _BagianFormAlamatState();
@@ -232,22 +232,48 @@ class BagianAlamat extends StatelessWidget {
       builder: (context, value, child) {
         final List<Alamat> listAlamat = value.listAlamat;
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 8),
-          height: 200,
+          margin: const EdgeInsets.symmetric(horizontal: 8),
+          height: 80,
           child: ListView.builder(
             itemCount: listAlamat.length,
             itemBuilder: (context, index) {
               final Alamat alamat = listAlamat[index];
-              return Card(
-                color: Colors.pink.shade50,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Penerima: ${alamat.namaPenerima}'),
-                      Text('ALamat: ${alamat.alamatPengiriman}'),
-                    ],
+              return Dismissible(
+                key: GlobalKey(),
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  color: Colors.pink,
+                  alignment: Alignment.centerRight,
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+                onDismissed: (_) =>
+                    Provider.of<AlamatProvider>(context, listen: false)
+                        .hapusAlamat(alamat),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: GestureDetector(
+                    onTap: () => showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => BagianFormAlamat(alamat: alamat),
+                    ),
+                    child: Card(
+                      color: Colors.pink.shade50,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Penerima: ${alamat.namaPenerima}'),
+                            Text('Alamat: ${alamat.alamatPengiriman}'),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               );

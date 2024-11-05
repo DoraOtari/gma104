@@ -74,4 +74,10 @@ class AlamatProvider extends ChangeNotifier {
     _listAlamat = listAlamat;
     notifyListeners();
   }
+
+  Future<void> hapusAlamat(Alamat alamat) async {
+    final db = await _dbHelper();
+    await db.delete('tb_alamat', where: 'id = ?', whereArgs: [alamat.id]);
+    await _ambilAlamat();
+  }
 }
