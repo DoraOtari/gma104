@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "788295997999",
+    "project_id": "bomnuklir-14672",
+    "storage_bucket": "bomnuklir-14672.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788295997999:android:ee66499663cfaad92384da",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8yvU86mJUe-yPAn51R9HpBJR-nfNN9Bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

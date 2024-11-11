@@ -80,4 +80,12 @@ class AlamatProvider extends ChangeNotifier {
     await db.delete('tb_alamat', where: 'id = ?', whereArgs: [alamat.id]);
     await _ambilAlamat();
   }
+
+  Future<void> ubahAlamat(Alamat alamatBaru, Alamat alamatLama) async {
+    final db = await _dbHelper();
+    await db.update('tb_alamat', alamatBaru.toMap(),
+        where: 'id = ?', whereArgs: [alamatLama.id]);
+    await _ambilAlamat();
+  }
+  
 }

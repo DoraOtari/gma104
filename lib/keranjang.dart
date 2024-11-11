@@ -161,6 +161,16 @@ class _BagianFormAlamatState extends State<BagianFormAlamat> {
   final _namaPenerimaCon = TextEditingController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.alamat != null) {
+      _alamatPengirimanCon.text = widget.alamat!.alamatPengiriman;
+      _namaPenerimaCon.text = widget.alamat!.namaPenerima;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       heightFactor: 0.9,
@@ -202,16 +212,23 @@ class _BagianFormAlamatState extends State<BagianFormAlamat> {
                     child: GestureDetector(
                       onTap: () {
                         final Alamat alamat = Alamat.fromMap({
+                          'id': widget.alamat?.id,
                           'alamatPengiriman': _alamatPengirimanCon.text,
                           'namaPenerima': _namaPenerimaCon.text,
                         });
-                        Provider.of<AlamatProvider>(context, listen: false)
-                            .tambahAlamat(alamat);
+                        print(widget.alamat);
+                        if (widget.alamat != null) {
+                          Provider.of<AlamatProvider>(context, listen: false)
+                              .ubahAlamat(alamat, widget.alamat!);
+                        } else {
+                          Provider.of<AlamatProvider>(context, listen: false)
+                              .tambahAlamat(alamat);
+                        }
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        'Simpan',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      child: Text(
+                        widget.alamat != null ? 'Ubah' : 'Simpan',
+                        style: const TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     )),
               ),

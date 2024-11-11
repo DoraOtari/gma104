@@ -3,6 +3,7 @@ import 'package:myapp/galeri.dart';
 import 'package:myapp/provider_alamat.dart';
 import 'package:myapp/provider_keranjang.dart';
 import 'package:myapp/provider_produk.dart';
+import 'package:myapp/register.dart';
 import 'package:myapp/store.dart';
 import 'package:provider/provider.dart';
 
@@ -14,11 +15,13 @@ void main() => runApp(MultiProvider(
         ChangeNotifierProvider(
           create: (context) => ProviderKeranjang(),
         ),
-        ChangeNotifierProvider(create: (context) => AlamatProvider(),)
+        ChangeNotifierProvider(
+          create: (context) => AlamatProvider(),
+        )
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MyApp(),
+        home: RegisterPage(),
       ),
     ));
 
